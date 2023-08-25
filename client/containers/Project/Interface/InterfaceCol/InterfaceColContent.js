@@ -697,11 +697,7 @@ class InterfaceColContent extends Component {
                     <span>
                       {' '}
                       每个用例都有唯一的key，用于获取所匹配接口的响应数据，例如使用{' '}
-                      <a
-                        href="https://hellosean1025.github.io/yapi/documents/case.html#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%8C%E7%BC%96%E8%BE%91%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"
-                        className="link-tooltip"
-                        target="blank"
-                      >
+                      <a href="http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/YApi/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BC%96%E8%BE%91%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B" className="link-tooltip"  target="blank">
                         {' '}
                         变量参数{' '}
                       </a>{' '}
@@ -1015,10 +1011,9 @@ class InterfaceColContent extends Component {
               }}
             >
               测试集合&nbsp;<a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://hellosean1025.github.io/yapi/documents/case.html"
-              >
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href="http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/YApi/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%8C%E6%B5%8B%E8%AF%95%E9%9B%86%E5%90%88">
                 <Tooltip title="点击查看文档">
                   <Icon type="question-circle-o" />
                 </Tooltip>

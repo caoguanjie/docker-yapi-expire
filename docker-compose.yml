@@ -2,7 +2,7 @@ version: '3'
 
 services:
   yapi-web:
-    image: xuweijie1015/yapi:latest
+    image: caoguanjie/docker-yapi:v2
     container_name: yapi-web
     ports:
       - 40001:3000
@@ -19,9 +19,8 @@ services:
       - YAPI_MAIL_FROM=
       - YAPI_MAIL_AUTH_USER=
       - YAPI_MAIL_AUTH_PASS=
-      - YAPI_PLUGINS=[{"name":"notifier","options":{"host":"http://localhost:3000"}},{"name":"pl-auto-test","options":{"host":"http://localhost:3000"}},{"name":"interface-oauth2-token"},{"name":"api-watch"}]
-
+      - YAPI_PLUGINS=[{"name":"add-user","options":{}},{"name":"notifier","options":{"host":"http://localhost:3000"}},{"name":"pl-auto-test","options":{"host":"http://localhost:3000"}},{"name":"interface-oauth2-token"},{"name":"api-watch"}]
     volumes:
-      - /Users/vicxu/Desktop/data/db:/data/db
+     - ./data/db:/data/db
     restart: unless-stopped
 

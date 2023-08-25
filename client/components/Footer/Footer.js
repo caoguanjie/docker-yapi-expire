@@ -1,8 +1,6 @@
 import './Footer.scss';
 import React, { PureComponent as Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'antd';
-import { Icon } from 'antd';
 
 const version = process.env.version;
 class Footer extends Component {
@@ -15,52 +13,14 @@ class Footer extends Component {
   render() {
     return (
       <div className="footer-wrapper">
-        <Row className="footer-container">
-          {this.props.footList.map(function(item, i) {
-            return (
-              <FootItem
-                key={i}
-                linkList={item.linkList}
-                title={item.title}
-                iconType={item.iconType}
-              />
-            );
-          })}
-        </Row>
+        <div className="fits">广东丰德科技有限公司</div>
+      
       </div>
     );
   }
-}
+} 
 
-class FootItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-  static propTypes = {
-    linkList: PropTypes.array,
-    title: PropTypes.string,
-    iconType: PropTypes.string
-  };
-  render() {
-    return (
-      <Col span={6}>
-        <h4 className="title">
-          {this.props.iconType ? <Icon type={this.props.iconType} className="icon" /> : ''}
-          {this.props.title}
-        </h4>
-        {this.props.linkList.map(function(item, i) {
-          return (
-            <p key={i}>
-              <a href={item.itemLink} className="link">
-                {item.itemTitle}
-              </a>
-            </p>
-          );
-        })}
-      </Col>
-    );
-  }
-}
+
 
 Footer.defaultProps = {
   footList: [
@@ -69,22 +29,18 @@ Footer.defaultProps = {
       iconType: 'github',
       linkList: [
         {
-          itemTitle: 'YApi 官方源码仓库',
-          itemLink: 'https://github.com/YMFE/yapi.git'
-        },
-        {
-          itemTitle: 'YApi xwj-vic源码仓库',
-          itemLink: 'https://github.com/xwj-vic/yapi.git'
+          itemTitle: 'YApi 源码仓库',
+          itemLink: 'https://github.com/YMFE/yapi'
         }
       ]
     },
     {
-      title: '社区自由维护者',
+      title: '团队',
       iconType: 'team',
       linkList: [
         {
-          itemTitle: '编译指南',
-          itemLink: 'https://blog.opendeveloper.cn/yapi'
+          itemTitle: 'YMFE',
+          itemLink: 'https://ymfe.org'
         }
       ]
     },
@@ -93,25 +49,17 @@ Footer.defaultProps = {
       iconType: 'aliwangwang-o',
       linkList: [
         {
-          itemTitle: '官方Github Issues',
+          itemTitle: 'Github Issues',
           itemLink: 'https://github.com/YMFE/yapi/issues'
         },
         {
-          itemTitle: '官方Github Pull Requests',
+          itemTitle: 'Github Pull Requests',
           itemLink: 'https://github.com/YMFE/yapi/pulls'
-        },
-        {
-          itemTitle: 'xwj-vic Github Issues',
-          itemLink: 'https://github.com/xwj-vic/yapi/issues'
-        },
-        {
-          itemTitle: 'xwj-vic Github Pull Requests',
-          itemLink: 'https://github.com/xwj-vic/yapi/pulls'
         }
       ]
     },
     {
-      title: `Copyright © 2018-${new Date().getFullYear()} YMFE`,
+      title: 'Copyright © 2018 YMFE',
       linkList: [
         {
           itemTitle: `版本: ${version} `,
@@ -119,7 +67,7 @@ Footer.defaultProps = {
         },
         {
           itemTitle: '使用文档',
-          itemLink: 'https://hellosean1025.github.io/yapi/'
+          itemLink: 'http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/yapi%E6%8E%A5%E5%8F%A3%E7%AE%A1%E7%90%86'
         }
       ]
     }

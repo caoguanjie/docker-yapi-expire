@@ -346,7 +346,7 @@ class ProjectEnvContent extends Component {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://hellosean1025.github.io/yapi/documents/project.html#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"
+              href="http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/YApi/%E9%A1%B9%E7%9B%AE%E6%93%8D%E4%BD%9C"
               style={{ marginLeft: 8 }}
             >
               <Tooltip title="点击查看文档">

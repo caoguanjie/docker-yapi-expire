@@ -167,7 +167,7 @@ module.exports = {
   ],
   IP_REGEXP: /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/,
   docHref: {
-    adv_mock_case: 'https://hellosean1025.github.io/yapi/documents/mock.html',
-    adv_mock_script: 'https://hellosean1025.github.io/yapi/documents/adv_mock.html'
+   adv_mock_case: 'http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/YApi/%E6%95%B0%E6%8D%AEMock',
+   adv_mock_script: 'http://192.168.32.60:3006/zh/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/YApi/%E9%AB%98%E7%BA%A7Mock'
   }
 };
