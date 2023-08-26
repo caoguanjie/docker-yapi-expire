@@ -17,7 +17,9 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositori
   echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories && \
   apk add util-linux && \
   npm install pm2 -g && \
-  apk add mongodb-tools 
+  apk add mongodb-tools && \
+  mkdir -p /data/db/restore-data
+
 
 
 EXPOSE $PORT

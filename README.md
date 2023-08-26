@@ -1,12 +1,9 @@
-## YApi  可视化接口管理平台
+# YApi  可视化接口管理平台
 
-# 源码来源yapi 官方github仓库，并基于最新版修复众多bug，基本实现拿来即用
+ 源码来源 [yapi官方github](https://github.com/ymfe/yapi)仓库，并基于`xwj-vic/yapi`最新版修复众多bug，基本实现拿来即用
 
-所有问题看这里就可以解决了，折腾了好久总结出来的：https://blog.opendeveloper.cn/yapi
+所有问题看[这里](https://blog.opendeveloper.cn/yapi)就可以解决了
 
-修复bug汇总：https://blog.opendeveloper.cn/yapi/bug
-
-docker:https://blog.opendeveloper.cn/yapi/docker
 
 当前集成插件：(在config.json中添加进去即可使用)
 - yapi-plugin-add-user
@@ -19,135 +16,144 @@ docker:https://blog.opendeveloper.cn/yapi/docker
 - yapi-plugin-qsso
 - yapi-plugin-webhook
 
+## doker Hub镜像
 
----
-官方redme如下：
+为了更方便使用，博主已经构造好了一个镜像，开箱即用 链接：[docker hub](https://hub.docker.com/r/caoguanjie/docker-yapi)
 
-体验地址：
+镜像使用的可通过docker-compose的方式构建
 
-[http://yapi.smart-xwork.cn/](http://yapi.smart-xwork.cn/)
+```yml
+version: '3'
 
-文档：
-<p><a target="_blank" href="https://hellosean1025.github.io/yapi">hellosean1025.github.io/yapi</a></p>
+services:
+  yapi-web:
+    image: caoguanjie/docker-yapi:latest
+    container_name: yapi-web
+    ports:
+      - 40001:3000
+    environment:
+      - YAPI_ADMIN_ACCOUNT=admin@admin.com
+      - YAPI_ADMIN_PASSWORD=admin
+      - YAPI_CLOSE_REGISTER=true
+      - YAPI_DB_SERVERNAME=127.0.0.1
+      - YAPI_DB_PORT=27017
+      - YAPI_DB_DATABASE=yapi
+      - YAPI_MAIL_ENABLE=true
+      - YAPI_MAIL_HOST=smtp.qq.com
+      - YAPI_MAIL_PORT=465
+      - YAPI_MAIL_FROM=
+      - YAPI_MAIL_AUTH_USER=
+      - YAPI_MAIL_AUTH_PASS=
+      - YAPI_PLUGINS=[{"name":"add-user","options":{}},{"name":"notifier","options":{"host":"http://localhost:3000"}},{"name":"pl-auto-test","options":{"host":"http://localhost:3000"}},{"name":"interface-oauth2-token"},{"name":"api-watch"}]
+    volumes:
+     - ./data/db:/data/db
+    restart: unless-stopped
 
-### 平台介绍
-![avatar](yapi-base-flow.jpg)
+```
 
-YApi 是<strong>高效</strong>、<strong>易用</strong>、<strong>功能强大</strong>的 api 管理平台，旨在为开发、产品、测试人员提供更优雅的接口管理服务。可以帮助开发者轻松创建、发布、维护 API，YApi 还为用户提供了优秀的交互体验，开发人员只需利用平台提供的接口数据写入工具以及简单的点击操作就可以实现接口的管理。
+## 二次开发
 
-**QQ交流群**:
+### mac环境搭建
 
-644642474 **主群可能已满**
-
-941802405 **群2欢迎加入**
-
-### 特性
-*  基于 Json5 和 Mockjs 定义接口返回数据的结构和文档，效率提升多倍
-*  扁平化权限设计，即保证了大型企业级项目的管理，又保证了易用性
-*  类似 postman 的接口调试
-*  自动化测试, 支持对 Response 断言
-*  MockServer 除支持普通的随机 mock 外，还增加了 Mock 期望功能，根据设置的请求过滤规则，返回期望数据
-*  支持 postman, har, swagger 数据导入
-*  免费开源，内网部署，信息再也不怕泄露了
-
-### 内网部署
-#### 环境要求
-* nodejs（7.6+)
-* mongodb（2.6+）
-* git
-#### 安装
-使用我们提供的 yapi-cli 工具，部署 YApi 平台是非常容易的。执行 yapi server 启动可视化部署程序，输入相应的配置和点击开始部署，就能完成整个网站的部署。部署完成之后，可按照提示信息，执行 node/{网站路径/server/app.js} 启动服务器。在浏览器打开指定url, 点击登录输入您刚才设置的管理员邮箱，默认密码为 ymfe.org 登录系统（默认密码可在个人中心修改）。
-
-    npm install -g yapi-cli --registry https://registry.npm.taobao.org
-    yapi server 
-    
-#### 服务管理
-利用pm2方便服务管理维护。
-
-    npm install pm2 -g  //安装pm2
-    cd  {项目目录}
-    pm2 start "vendors/server/app.js" --name yapi //pm2管理yapi服务
-    pm2 info yapi //查看服务信息
-    pm2 stop yapi //停止服务
-    pm2 restart yapi //重启服务
-
-#### 升级
-升级项目版本是非常容易的，并且不会影响已有的项目数据，只会同步 vendors 目录下的源码文件。
-    
-    cd  {项目目录}
-    yapi ls //查看版本号列表
-    yapi update //更新到最新版本
-    yapi update -v {Version} //更新到指定版本
-    
-### 教程
-* [使用 YApi 管理 API 文档，测试， mock](https://juejin.im/post/5acc879f6fb9a028c42e8822)
-* [自动更新 Swagger 接口数据到 YApi 平台](https://juejin.im/post/5af500e251882567096140dd)
-* [自动化测试](https://juejin.im/post/5a388892f265da430e4f4681)
-* [GTest(基于YApi)接口研发效能提升10倍 实战](https://mp.weixin.qq.com/s/z66f7bRX8aAOppAtBIB7Uw)
-
-### YApi 插件
-* [yapi sso 登录插件](https://github.com/YMFE/yapi-plugin-qsso)
-* [yapi cas 登录插件](https://github.com/wsfe/yapi-plugin-cas) By wsfe
-* [yapi gitlab集成插件](https://github.com/cyj0122/yapi-plugin-gitlab)
-* [oauth2.0登录](https://github.com/xwxsee2014/yapi-plugin-oauth2)
-* [rap平台数据导入](https://github.com/wxxcarl/yapi-plugin-import-rap)
-* [dingding](https://github.com/zgs225/yapi-plugin-dding) 钉钉机器人推送插件
-* [export-docx-data](https://github.com/inceptiongt/Yapi-plugin-export-docx-data) 数据导出docx文档
-* [interface-oauth-token](https://github.com/shouldnotappearcalm/yapi-plugin-interface-oauth2-token) 定时自动获取鉴权token的插件
-* [import-swagger-customize](https://github.com/follow-my-heart/yapi-plugin-import-swagger-customize) 导入指定swagger接口
-
-### 代码生成
-* [yapi-to-typescript：根据 YApi 的接口定义生成 TypeScript 的请求函数](https://github.com/fjc0k/yapi-to-typescript)
-* [yapi-gen-js-code: 根据 YApi 的接口定义生成 javascript 的请求函数](https://github.com/hellosean1025/yapi-gen-js-code)
-* [SwiftJSONModeler:根据 YApi 的接口生成 Swift 模型代码](https://github.com/CodeOcenS/SwiftJSONModeler)
-
-### YApi docker部署（非官方）
-* [使用 alpine 版 docker 镜像快速部署 yapi](https://www.jianshu.com/p/a97d2efb23c5)
-* [docker-yapi: 基于官方yapi-cli的docker-compose方案](https://github.com/Ryan-Miao/docker-yapi)
-* [docker-compose一键部署yapi](https://github.com/jinfeijie/yapi)
-* [docker-YApi: 更易用的 YApi 镜像](https://github.com/fjc0k/docker-YApi)
-* [使用DockerCompose构建部署Yapi](https://github.com/MyHerux/daily-code/blob/master/Program/%E5%B7%A5%E5%85%B7%E7%AF%87/Yapi/%E4%BD%BF%E7%94%A8DockerCompose%E6%9E%84%E5%BB%BA%E9%83%A8%E7%BD%B2Yapi.md)
-* [yapi-docker: dockerized yapi deployment all in one](https://github.com/williamlsh/yapi-docker)
-
-### YApi 一些工具
-* [Api Generator](https://github.com/Forgus/api-generator) 接口文档自动生成插件（零入侵）
-* [mysql服务http工具,可配合做自动化测试](https://github.com/hellosean1025/http-mysql-server)
-* [idea 一键上传接口到yapi插件](https://github.com/diwand/YapiIdeaUploadPlugin)
-* [idea 接口上传调试插件 easy-yapi](https://easyyapi.com/)
-* [执行 postgres sql 的服务](https://github.com/shouldnotappearcalm/http-postgres-server)
-* [SpringBoot依赖自动生成YApi](https://github.com/NoBugBoy/YDoc)
-* [Yapi X 一键生成接口文档, 上传到yapi, rap2, eolinker等（IDEA插件）](https://github.com/jetplugins/yapix)
-
-### YApi 的一些客户
-* 去哪儿
-* 携程
-* 艺龙 
-* 美团
-* 百度
-* 腾讯
-* 阿里巴巴
-* 京东
-* 今日头条
-* 唯品支付 
-* 链家网
-* 快手
-* 便利蜂
-* 中商惠民
-* 新浪
-* VIPKID
-* 马蜂窝
-* 伴鱼
-* 旷视科技
-
-### Authors
-* [hellosean1025](https://github.com/hellosean1025)
-* [gaoxiaomumu](https://github.com/gaoxiaomumu)
-* [zwjamnsss](https://github.com/amnsss)
-* [dwb1994](https://github.com/dwb1994)
-* [fungezi](https://github.com/fungezi)
-* [ariesly15](https://github.com/ariesly15)
+硬性要求：以下版本一定要低，否则无法编译成功
+-  本地node版本：v8.17.0
+-  本地npm版本：v6.13.4
+-  本地node-gyp版本：v9.3.1
+-  本地python环境：2.7.18
 
 
-### License
-Apache License 2.0
+### 部署客户端界面
 
+如果需要调整界面或者改变yapi的代码，调整完代码之后，要执行命令之后，才会显示新的代码
+```sh
+# 打包yapi的客户端
+npm run build-client
+```
+打包好的文件存放在路径：`static`文件夹里面，我们可以选择把`static`文件夹通过docker的复制命令`docker cp`把改变后的界面代码，复制到容器里面
+
+也可以选择通过Dockerfile的文件，生成新的镜像，然后把镜像上传到docker Hub平台，然后再重启docker-compose命令，更新服务。
+```sh
+# 通过Dockerfile的文件构建镜像，要进入根目录  
+docker build -t caoguanjie/docker-yapi:latest .
+# 把镜像提交到docker Hub平台
+docker push caoguanjie/docker-yapi:latest
+# 去到相应的文件夹，执行docker-compose命令更新服务，记得要修改镜像的版本
+docker-compose up
+```
+
+## 安装新插件
+
+1. 插件主要依赖`/yapi/config.json`文件，把相应的插件下载到node_mudules之后，修改config.json文件即可。
+2. 由于我该项目只保留的`/vendors`文件夹里面的代码，所以我把config.json的文件也放根目录地下了，因此我修改了`ykit.config.js`文件中的`initPlugins`方法，改了config.json的路径
+
+## 数据备份
+1. 先编写shell脚本进行数据库的备份操作
+```sh
+# 路径： mongo-backup.sh
+# -h 连接的数据库地址， -d 数据库名称，-o 导出路径， -u 用户名， -p 密码
+mongodump -h 127.0.0.1:27017 -d yapi -o /data/db/backup 
+
+
+# 把数据库文件打包,压缩包的名字类似：yapi_2023-08-23.tar.gz
+tar -zcvf  /data/db/backup/yapi_$(date +%F).tar.gz /data/db/backup/yapi
+
+# 删除目录
+rm -rf /data/db/backup/yapi
+```
+
+2. 设置定时任务。
+```sh
+# 进到容器的终端中，输入crontab -e 
+# 设置定时任务，执行下面的命令会进去一个配置文件中去
+crontab -e 
+# 进到配置文件后，键盘输入： i，进行修改
+# 加上一条定时任务
+# 可以去菜鸟教程查看crontab命令：https://www.runoob.com/w3cnote/linux-crontab-tasks.html
+
+# 定义每周六进行数据库备份
+*   *   *   *   6   sh /yapi/vendors/mongo-backup.sh
+
+# 进行上面操作后，键盘输入 esc + :wq(退出并保存)
+# ！！！！！注意保存前，一定要删除容器中其他的定时任务，防止占用资源
+
+# cron服务是Linux的内置服务，但它不会开机自动启动。可以用以下命令启动和停止服务
+# crond start（启动）、crond stop(停止)、crond restart(重启服务)、crond reload(重新加载)
+# 因此我们可以输入下面命令，进行定时器的启动
+crond start
+```
+
+
+## 数据还原
+docker镜像将会在路径`/data/db/`下创建一个`restore-data`的文件夹，存放yapi的备份数据，因此备份路径的具体文件夹是：`/data/db/restore-data/yapi`,执行MongoDB的恢复数据的工具`mongorestore`
+
+```sh
+## 命令结构是：>mongorestore -h <hostname><:port> -d dbname <path>
+$ mongorestore -h 127.0.0.1:27017 -d yapi /data/db/restore-data/yapi
+## [-h] MongDB所在服务器地址，例如：127.0.0.1或localhost，当然也可以指定端口号：127.0.0.1:27017
+## [-D / -d] 需要恢复的数据库实例，例如：test，当然这个名称也可以和备份时候的不一样，比如yapi
+## [path] mongorestore 最后的一个参数，设置备份数据所在位置，这个备份数据，就是上面备份生成的备份数据文件夹，例如:D:\MongoDB\Server\4.2\data\yapi
+```
+
+如果在容器挂载的数据卷`/data/db/`中找不到文件夹restore-data，可以选择在宿主机中自行创建，创建完成会同步在docker容器中进行同步
+
+
+我们可以进到yapi正在运行的容器中，打开容器中的终端命令界面，然后输入以下命令即可完成数据的恢复
+```sh
+sh /yapi/vendors/mongorestore.sh
+```
+
+
+## 踩坑记录
+
+如果重新安装，出现如下错误，请删除管理员账号信息
+```
+(node:20024) UnhandledPromiseRejectionWarning: Error: 初始化管理员账号 "admin@admin.com" 失败, E11000 duplicate key error collection: yapi.user index: email_1 dup key: { : "admin@admin.com" }
+```
+进入数据库删除管理员账户信息
+```sh
+mongo
+
+> use yapi;
+
+> db.user.remove({"username":"admin"})
+```
