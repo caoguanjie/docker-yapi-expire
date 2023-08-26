@@ -128,7 +128,7 @@ docker镜像将会在路径`/data/db/`下创建一个`restore-data`的文件夹�
 
 ```sh
 ## 命令结构是：>mongorestore -h <hostname><:port> -d dbname <path>
-$ mongorestore -h 127.0.0.1:27017 -d yapi /data/db/restore-data/yapi
+ mongorestore -h 127.0.0.1:27017 -d yapi /data/db/restore-data/yapi
 ## [-h] MongDB所在服务器地址，例如：127.0.0.1或localhost，当然也可以指定端口号：127.0.0.1:27017
 ## [-D / -d] 需要恢复的数据库实例，例如：test，当然这个名称也可以和备份时候的不一样，比如yapi
 ## [path] mongorestore 最后的一个参数，设置备份数据所在位置，这个备份数据，就是上面备份生成的备份数据文件夹，例如:D:\MongoDB\Server\4.2\data\yapi
@@ -145,6 +145,7 @@ sh /yapi/vendors/mongorestore.sh
 
 ## 踩坑记录
 
+### 管理员账号初始化失败
 如果重新安装，出现如下错误，请删除管理员账号信息
 ```
 (node:20024) UnhandledPromiseRejectionWarning: Error: 初始化管理员账号 "admin@admin.com" 失败, E11000 duplicate key error collection: yapi.user index: email_1 dup key: { : "admin@admin.com" }
@@ -157,3 +158,39 @@ mongo
 
 > db.user.remove({"username":"admin"})
 ```
+
+### 数据库恢复数据失败
+```sh
+# 错误信息，只有一个数据修复成功，其他都修复失败了
+1 document(s) restored successfully. 840 document(s) failed to restore.
+```
+
+解决办法
+
+进入容器的终端，进去mongo数据库，删除yapi这个数据，再执行恢复数据
+
+```sh
+mongo
+
+> use yapi;
+
+> db.dropDatabase()
+
+> exit
+
+mongorestore -h 127.0.0.1:27017 -d yapi /data/db/restore-data/yapi
+```
+
+## mock模拟数据，模拟数组经常失败
+问题报错， 问题在[issue](https://github.com/YMFE/yapi/issues/731)：
+```sh
+2023-08-26 13:02:42 [json-schema-faker] calling JsonSchemaFaker() is deprecated, call either .generate() or .resolve()
+```
+
+解决办法：
+```sh
+# 将版本0.5.0-rc16变成0.5.0-rc13
+npm i json-schema-faker@0.5.0-rc13
+# 重新编译生成客户端
+npm run build-client   
+```sh
