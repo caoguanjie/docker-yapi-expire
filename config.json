@@ -19,7 +19,8 @@
             "pass": "*****"
         }
     },
-    "plugins": [{
+    "plugins": [
+        {
             "name": "notifier",
             "options": {
                 "host": "http://localhost:3000"
@@ -42,24 +43,6 @@
         },
         {
             "name": "import-swagger-customize"
-        },
-        {
-            "name": "webhook",
-            "options": {
-                "monitor1": {
-                    "yapiAdress": "127.0.0.1",
-                    "yapiPort": "3000",
-                    "url": "http://127.0.0.1:3000/api/v1",
-                    "method": "post",
-                    "status": true,
-                    "events": [
-                        "interface_add",
-                        "interface_del",
-                        "interface_update"
-                    ],
-                    "desc": "监听器1"
-                }
-            }
         },
         {
             "name": "export-schema"
